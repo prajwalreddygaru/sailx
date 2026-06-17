@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 0 72% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 20% 96%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 20% 96%;
+    /* Standard paragraph color (#786D6D) */
+    --muted-foreground: 0 6% 45%;
+    --accent: 0 72% 95%;
+    --accent-foreground: 0 72% 30%;
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 76% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 10%;
+    --border: 0 10% 88%;
+    --input: 0 10% 88%;
+    --ring: 0 72% 50%;
+    --brand-glow: 0 72% 50%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 7%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 0 80% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 15% 14%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 15% 12%;
+    --muted-foreground: 0 10% 65%;
+    --accent: 0 20% 14%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 152 70% 45%;
+    --success-foreground: 0 0% 10%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 10%;
+    --border: 0 15% 18%;
+    --input: 0 15% 18%;
+    --ring: 0 80% 62%;
+    --brand-glow: 0 80% 62%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    /* Increase base font size so all rem-based text scales up */
+    font-size: 17px;
+  }
+  body {
+    @apply bg-background;
+    /* Default non-heading text color and size */
+    color: #786D6D;
+    font-size: 0.875rem; /* 14.875px with html 17px */
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1, "cv11" 1;
+  }
+  button, input, select, textarea {
+    font-family: inherit;
+  }
+  /* Paragraph defaults across the site */
+  p {
+    @apply text-sm leading-relaxed;
+    color: #786D6D;
+    margin: 17px 0 0 0; /* match requested top spacing */
+  }
+  p:first-child { margin-top: 0; }
+  /* Display font (overridable via --font-display variable) */
+  .font-display, strong, b, h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+  }
+  /* Headings keep primary foreground color (excluded from body default) */
+  h1, h2, h3, h4, h5, h6 { color: hsl(var(--foreground)); }
+
+  /* Slightly larger on desktop for better readability */
+  @media (min-width: 1024px) {
+    html { font-size: 18px; }
+  }
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+}
+
+/* Force scrollbar track to always stay visible so modal open never changes viewport width.
+   Zero out any JS padding compensation since scrollbar never disappears. */
+html {
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+body {
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/40 dark:border-white/[0.06];
+  }
+  .glass-strong {
+    @apply bg-white/80 dark:bg-white/[0.06] backdrop-blur-2xl border border-white/50 dark:border-white/[0.08];
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground to-foreground/60;
+  }
+  .gradient-brand {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .noise {
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  /* Ensure typography plugin blocks use the same paragraph spec */
+  .prose p {
+    @apply text-sm leading-relaxed;
+    color: #786D6D;
+    margin: 17px 0 0 0;
+  }
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}

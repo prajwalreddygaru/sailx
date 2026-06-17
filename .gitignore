@@ -1,0 +1,19 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+.env.*.local
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+prisma/migrations/dev.db*
+
+# Uploaded images — stored outside public/ (see src/lib/uploads.ts)
+.uploads/
+public/uploads/
